@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+    
+<h3>Conta</h3>
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Conta</th>
+        </tr>
+
+    </thead>
+
+    @{
+        foreach (var item in (List<ContaModel>)ViewBag.ListaConta)    //Cast explicito  - Conversões explicitas
+        {
+            <tbody>
+                    <tr>
+
+                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.Id.ToString())"> Excluir </td>
+                        <td>@item.Id.ToString()</td>
+                        <td>@item.Nome.ToString()</td>
+                        <td>@item.Saldo.ToString("C")</td>
+
+                    </tr>
+
+            </tbody>
+        }
+    }
+ </table>
+
+<button type="button" onclick="CriarConta()" class="btn btn-block btn-primary"> @* criando um botão para criar a conta -> necessário criar a controller e a view *@
+    Criar Conta
+</button>
+
+<script>
+
+    function CriarConta () {
+    window.location.href = "../Conta/CriarConta" //acessando minha view CriarConta formar diferente de usar: <a href="../Usuario/Login"> aqui </a> 
+    }
+
+    
+    function Excluir(id_conta){
+        window.location.href = "../Conta/ExcluirConta/" + id_conta; //Na rota (Statup) permite concatenar os valores. Chamando minha controller Conta e o método ExcluirConta
+     }
+
+</script>

@@ -1,0 +1,111 @@
+﻿@model TransacaoModel
+
+<h2>Meu Extrato</h2>
+<div class="container">
+    @*Aqui é um filtro*@
+    <form asp-controller="Transacao" asp-action="Extrato">
+        <div class="form-group">
+            <label>Data Transacao (Inicio)</label>
+            <input type="date" asp-for="Data" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Data Transacao (Final)</label>
+            <input type="date" asp-for="DataFinal" class="form-control">
+        </div>
+        <div class="form-group">
+            <label> Tipo Transação </label>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="A" checked>Receitas e Despesas</label> </div>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="R">Receitas</label> </div>
+            <div class="radio"><label><input type="radio" asp-for="Tipo" value="D">Despesas</label> </div>
+        </div>
+        <div class="form-group">
+            <label>Conta: </label>
+            <select asp-for="Conta_Id" class="form-control">
+                @{
+                    foreach (var item in (List<ContaModel>)ViewBag.ListaContas)
+                    {
+                        <option value="@item.Id.ToString()">@item.Nome.ToString()</option>
+                    }
+
+                }
+
+            </select>
+        </div>
+        <button type="submit" class="btn btn-block btn-success">Pesquisar</button> @*Aqui submete a controladora Transacao e action Extrato (método post)*@
+    </form>
+</div>
+<br />
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Historico</th>
+            <th>Conta</th>
+            <th>Plano de Contas</th>
+
+        </tr>
+
+    </thead>
+
+    @{
+
+            var totalreceitas = 0.0;
+            var totaldispesas = 0.0;
+            var vsaldo = 0.0;
+            var valorpoupanca = 0.0;
+            var dispesa = 0.0;
+
+            foreach (var item in (List<TransacaoModel>)ViewBag.ListaTransacao)  //ViewBag da classe controller  //Cast explicito  - Conversões explicitas
+            {
+            <tbody>
+                <tr>
+                    <td><button type="button" class="btn btn-primary" onclick="Editar(@item.Id.ToString())"> Editar </td>
+                    <td>@item.Id.ToString()</td>
+                    <td>@item.Data.ToString()</td>
+                    <td>@item.Tipo.ToString().Replace("R", "Receita").Replace("D", "Despesa")</td>
+                    <td>@item.Valor.ToString("C")</td> @*//https://docs.microsoft.com/pt-br/dotnet/api/system.double.tostring?view=netframework-4.7*@
+                    <td>@item.Descricao.ToString()</td>
+                    <td>@item.Nome_Conta.ToString()</td>
+                    <td>@item.Descricao_Plano_Conta.ToString()</td>
+
+
+                </tr>
+                @{if (item.Tipo == "D")
+                    {
+                        totaldispesas += double.Parse(item.Valor.ToString());
+                    }
+                    else
+                    {
+                        totalreceitas += double.Parse(item.Valor.ToString());
+                    }
+
+                }
+
+
+            </tbody>
+                    }
+                    foreach (var item in (List<ContaModel>)ViewBag.ListaContas) {
+                        item.Saldo.ToString();
+                         valorpoupanca = double.Parse(item.Saldo.ToString());
+                    }    
+                    dispesa = totaldispesas - totalreceitas;
+                    vsaldo = valorpoupanca - dispesa;
+                   
+    }
+</table>
+<h3><strong>Poupança: </strong> @valorpoupanca.ToString("C")</h3>
+<h3 style="color:red"><strong>Saldo: </strong> @vsaldo.ToString("C")</h3>
+
+<script>
+
+    function Editar(id) {
+        window.location.href = "../Transacao/Registrar/" + id; //chamando a mesma visão para visualizar os dados antes de editar
+    }
+
+
+</script>

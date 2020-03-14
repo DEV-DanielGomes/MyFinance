@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Plano de Contas</h3>
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>#</th>
+            <th>Id</th>
+            <th>Descricao</th>
+            <th>Tipo</th>
+        </tr>
+
+    </thead>
+
+    @{
+        foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoConta)    //Cast explicito  - Conversões explicitas
+        {
+            <tbody>
+                    <tr>
+                        <td><button type="button" class="btn btn-primary" onclick="Editar(@item.Id.ToString())"> Editar </td>
+                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.Id.ToString())"> Excluir </td>
+                        <td>@item.Id.ToString()</td>
+                        <td>@item.Descricao.ToString()</td>
+                        <td>@item.Tipo.ToString().Replace("R", "Receita").Replace("D", "Despesa")</td>
+
+                    </tr>
+
+            </tbody>
+        }
+    }
+</table>
+
+<button type="button" onclick="CriarPlanoConta()" class="btn btn-block btn-primary">
+    @* criando um botão para criar a conta -> necessário criar a controller e a view *@
+    Criar Plano de conta
+</button>
+
+<script>
+
+    function CriarPlanoConta () {
+    window.location.href = "../PlanoConta/CriarPlanoConta/" //acessando minha view CriarConta formar diferente de usar: <a href="../Usuario/Login"> aqui </a>
+    }
+
+
+    function Excluir(id_conta){
+        window.location.href = "../PlanoConta/ExcluirPlanoConta/" + id_conta; //Na rota (Statup) permite concatenar os valores. Chamando minha controller Conta e o método ExcluirConta
+    }
+
+     function Editar(id_conta){
+        window.location.href = "../PlanoConta/CriarPlanoConta/" + id_conta; //chamando a mesma visão para visualizar os dados antes de editar 
+     }
+
+
+</script>

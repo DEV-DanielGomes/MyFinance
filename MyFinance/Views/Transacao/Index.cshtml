@@ -1,0 +1,64 @@
+﻿<h3>Minhas transações</h3>
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>#</th>
+            <th>Id</th>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Historico</th>
+            <th>Conta</th>
+            <th>Plano de Contas</th>
+
+        </tr>
+
+    </thead>
+
+    @{
+        foreach (var item in (List<TransacaoModel>)ViewBag.ListaTransacao)  //ViewBag da classe controller  //Cast explicito  - Conversões explicitas
+        {
+            <tbody>
+                    <tr>
+                        <td><button type="button" class="btn btn-primary" onclick="Editar(@item.Id.ToString())"> Editar </td>
+                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.Id.ToString())"> Excluir </td>
+                        <td>@item.Id.ToString()</td>
+                        <td>@item.Data.ToString()</td>
+                        <td>@item.Tipo.ToString().Replace("R", "Receita").Replace("D", "Despesa")</td>
+                        <td>@item.Valor.ToString("C")</td> @*//https://docs.microsoft.com/pt-br/dotnet/api/system.double.tostring?view=netframework-4.7*@
+                        <td>@item.Descricao.ToString()</td>
+                        <td>@item.Nome_Conta.ToString()</td>
+                        <td>@item.Descricao_Plano_Conta.ToString()</td>
+
+
+                    </tr>
+
+            </tbody>
+        }
+    }
+</table>
+
+<button type="button" onclick="RegistrarTransacao()" class="btn btn-block btn-primary">
+    @* criando um botão para criar a conta -> necessário criar a controller e a view *@
+    Registrar transação
+</button>
+
+<script>
+
+    function RegistrarTransacao () {
+    window.location.href = "../Transacao/Registrar/" //acessando minha view CriarConta formar diferente de usar: <a href="../Usuario/Login"> aqui </a>
+    }
+
+
+        function Excluir(id){
+            window.location.href = "../Transacao/ExcluirTransacao/" + id; //Na rota (Statup) permite concatenar os valores. Chamando minha controller Conta e o método ExcluirConta
+    }
+
+     function Editar(id){
+        window.location.href = "../Transacao/Registrar/" + id; //chamando a mesma visão para visualizar os dados antes de editar
+     }
+
+
+</script>

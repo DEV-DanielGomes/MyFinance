@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "Menu";
+}
+<style>
+    .lista {
+        width: 940px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
+
+        .lista li {
+            display: inline-block;
+            width: 30%;
+            text-align: center;
+            vertical-align: top;
+            margin: 0 1.5%;
+            padding: 15px 0;
+            text-decoration: none;
+        }
+
+            .lista li a {
+                color: #000000; /*Necessário definir uma cor para alterar a do link*/
+                text-decoration: none;
+            }
+
+    img {
+        width: 30%
+    }
+</style>
+
+<div>
+    <ul class="lista">
+        <li>
+            <a href="../Conta/Index">
+                <img src="~/images/conta.png">
+                <h2>Criar Conta</h2>
+            </a>
+        </li>
+        <li>
+            <a href="../PlanoConta/Index">
+                <img src="~/images/planocontas.png">
+                <h2>Plano de Contas</h2>
+            </a>
+        </li>
+        <li>
+            <a href="../Transacao/index">
+                <img src="~/images/registrar_transacao.png">
+                <h2>Registrar Transação</h2>
+            </a>
+        </li>
+        <li>
+            <a href="../Transacao/Extrato">
+                <img src="~/images/extrato.png">
+                <h2>Extrato</h2>
+            </a>
+        </li>
+        <li>
+            <a href="../Transacao/Dashboard">
+                <img src="~/images/dashboard.png">
+                <h2>Dashboard</h2>
+            </a>
+        </li>
+        <li>
+            <a href="../Home/Ajuda">
+                <img src="~/images/ajuda.png">
+                <h2>Ajuda</h2>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+@*
+        Criando no bootstrap
+
+        <div class="row">
+        <div class="col-lg-4 text-center">
+            <img src="~/images/conta.png" width="40%">
+            <h2> Criar Conta </h2>
+        </div>
+        <div class="col-lg-4 text-center">
+            <img src="~/images/planocontas.png" width="40%">
+            <h2> Plano de Contas </h2>
+        </div>
+        <div class="col-lg-4 text-center">
+            <img src="~/images/conta.png" width="40%">
+            <h2> Registrar Transações </h2>
+        </div>
+    </div>*@
